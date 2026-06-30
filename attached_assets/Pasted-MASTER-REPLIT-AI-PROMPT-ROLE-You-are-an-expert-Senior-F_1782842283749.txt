@@ -1,0 +1,732 @@
+MASTER REPLIT AI PROMPT
+ROLE
+
+You are an expert Senior Full Stack Developer, Senior UI/UX Designer, Brand Designer, Digital Marketing Expert, Conversion Rate Optimization Expert, Facebook Ads Landing Page Specialist, SEO Expert, Product Photographer, Motion Designer, and Shopify-level E-commerce Designer.
+
+Create a world-class premium D2C website.
+
+Do NOT create a template website.
+
+Create a premium startup-quality website comparable to:
+
+• Lovevery
+• KiwiCo
+• Crayola
+• Melissa & Doug
+• LEGO
+• Apple Product Pages
+
+The website must feel like a million-dollar children's creative brand.
+
+Brand Information
+
+Brand Name
+
+PlayPalette.
+
+Logo Style
+
+Minimal
+
+Modern
+
+Premium
+
+Colorful
+
+Rounded typography
+
+Tagline
+
+Paint • Play • Create
+
+Business Type
+
+Creative Activity Kits for Kids
+
+Primary Product
+
+DIY Plaster of Paris Paint Kits
+
+Price
+
+₹599
+
+Includes
+
+10 DIY Paint Kits
+
+3 Colors Each
+
+Brush Included
+
+Perfect Birthday Gift
+
+Screen-Free Activity
+
+Age Group
+
+3–10 Years
+
+Phone
+
+9723094760
+
+Contact Persons
+
+Kenil Sutariya
+
+Kishan Sapariya
+
+Country
+
+India
+
+Currency
+
+INR
+
+Color Palette
+
+Primary
+
+#FF6B6B
+
+Coral
+
+Secondary
+
+#FFD93D
+
+Yellow
+
+Accent
+
+#6BCB77
+
+Green
+
+Accent
+
+#4D96FF
+
+Blue
+
+Accent
+
+#9B5DE5
+
+Purple
+
+Background
+
+#FFFFFF
+
+Cards
+
+#FFF9F3
+
+Text
+
+#222222
+
+Buttons
+
+Gradient
+
+Pink → Orange
+
+Use playful but premium colors.
+
+Never look childish.
+
+Typography
+
+Google Fonts
+
+Poppins
+
+Nunito
+
+Baloo 2
+
+Rounded corners
+
+Modern shadows
+
+Glassmorphism where appropriate
+
+Smooth animations
+
+Premium spacing
+
+Website Style
+
+Apple website
+
+Disney
+
+LEGO
+
+Crayola
+
+Lovevery
+
+Premium
+
+Minimal
+
+Bright
+
+Fun
+
+Professional
+
+Responsive
+
+Luxury
+
+Micro animations
+
+Floating shapes
+
+Paint splashes
+
+Soft gradients
+
+Rounded cards
+
+Large CTA buttons
+
+Navigation
+
+Sticky Navbar
+
+Logo
+
+Home
+
+Products
+
+Birthday Gifts
+
+Schools
+
+About
+
+FAQ
+
+Contact
+
+Cart
+
+Buy Now Button
+
+WhatsApp Floating Button
+
+Call Button
+
+Hero Section
+
+Huge premium hero
+
+Kids painting
+
+Beautiful colorful background
+
+Floating paint splashes
+
+POP figurines
+
+Paint brushes
+
+Rainbow colors
+
+Headline
+
+Keep Kids Away From Screens
+
+Subheadline
+
+Let Creativity Take Over
+
+Button
+
+Shop Now
+
+Secondary Button
+
+Watch Demo
+
+Scrolling animations
+
+Parallax effects
+
+Why Parents Love PlayPalette
+
+Six premium cards
+
+Screen Free
+
+Boost Creativity
+
+Improve Focus
+
+Fine Motor Skills
+
+Perfect Gift
+
+Safe Materials
+
+Each card
+
+Beautiful icon
+
+Animation
+
+Hover effects
+
+Featured Products
+
+Large cards
+
+Animal Kit
+
+Dinosaur Kit
+
+Princess Kit
+
+Vehicle Kit
+
+Alphabet Kit
+
+Ocean Kit
+
+Each product
+
+Multiple images
+
+Price
+
+₹599
+
+Quantity selector
+
+Buy Now
+
+Add to Cart
+
+Wishlist
+
+Hover animation
+
+3D effect
+
+Product Detail Page
+
+Huge gallery
+
+Zoom
+
+Image slider
+
+Product video
+
+Description
+
+Features
+
+What's inside
+
+Benefits
+
+Shipping
+
+Return Policy
+
+FAQ
+
+Reviews
+
+Related products
+
+Sticky Buy Button
+
+What's Inside
+
+Beautiful infographic
+
+10 POP figurines
+
+30 paint colors
+
+10 brushes
+
+Instruction guide
+
+Premium packaging
+
+Timeline animation
+
+How It Works
+
+Three large animated cards
+
+Open Box
+
+Paint
+
+Display
+
+Each step animated
+
+Video Section
+
+Autoplay hero video
+
+Children painting
+
+Parents smiling
+
+Finished products
+
+Beautiful transitions
+
+Gallery
+
+Pinterest style masonry grid
+
+100+ images
+
+Lightbox
+
+Lazy loading
+
+Filtering
+
+Animals
+
+Princess
+
+Vehicles
+
+Dinosaurs
+
+Alphabet
+
+Birthday
+
+Reviews
+
+Animated testimonials
+
+★★★★★
+
+Real looking cards
+
+Parent images
+
+Kids artwork
+
+Verified badge
+
+Birthday Return Gift Section
+
+Large banner
+
+Perfect for
+
+Birthday Parties
+
+Schools
+
+Festivals
+
+Events
+
+Corporate Kids Events
+
+Pricing table
+
+Bulk Orders
+
+Schools
+
+Toy Shops
+
+Gift Stores
+
+Resellers
+
+Wholesale
+
+MOQ
+
+10 Kits
+
+Call Now Button
+
+About Us
+
+Storytelling
+
+Mission
+
+Vision
+
+Creativity
+
+Screen Free Learning
+
+Made in India
+
+FAQ
+
+20 FAQs
+
+Accordion
+
+Animations
+
+Contact
+
+Google Map
+
+Phone
+
+9723094760
+
+Kenil Sutariya
+
+Kishan Sapariya
+
+WhatsApp
+
+Email
+
+Contact Form
+
+Footer
+
+Newsletter
+
+Quick Links
+
+Instagram
+
+Facebook
+
+YouTube
+
+WhatsApp
+
+Copyright
+
+WhatsApp Integration
+
+Floating WhatsApp button
+
+Pre-filled message
+
+Hello,
+
+I would like to order PlayPalette Paint Kits.
+
+Facebook Pixel Ready
+
+Prepare code
+
+Pixel integration
+
+Event tracking
+
+Purchase
+
+ViewContent
+
+AddToCart
+
+Lead
+
+Contact
+
+SEO
+
+Perfect SEO
+
+Meta titles
+
+Descriptions
+
+Schema
+
+Open Graph
+
+Twitter Cards
+
+Fast loading
+
+Lighthouse Score
+
+95+
+
+Performance
+
+Next.js
+
+React
+
+TypeScript
+
+TailwindCSS
+
+Framer Motion
+
+GSAP
+
+React Query
+
+Lazy Loading
+
+Code Splitting
+
+Image Optimization
+
+Server Side Rendering
+
+Admin Dashboard
+
+Password Protected
+
+Upload Products
+
+Change Price
+
+Orders
+
+Customers
+
+Leads
+
+Inventory
+
+Analytics
+
+Coupon Codes
+
+Shipping Settings
+
+Checkout
+
+COD
+
+UPI
+
+Credit Card
+
+Debit Card
+
+Razorpay
+
+Cashfree
+
+Shipping Charges
+
+Order Tracking
+
+Invoice
+
+GST Ready
+
+Mobile Version
+
+Perfect responsive
+
+Bottom navigation
+
+Large buttons
+
+Swipe gallery
+
+Fast loading
+
+Animations
+
+Floating paint drops
+
+Paint splash transitions
+
+Mouse hover
+
+Card lift
+
+Image zoom
+
+Counter animation
+
+Confetti
+
+Loading animation
+
+Smooth scrolling
+
+Images
+
+Use premium realistic images
+
+Cute children
+
+Parents
+
+Professional product photography
+
+White background
+
+Soft shadows
+
+Lifestyle images
+
+Replace with placeholders that are easy to swap later.
+
+AI Features
+
+Product recommendations
+
+Gift finder
+
+Age recommendation
+
+Live chat
+
+FAQ chatbot
+
+Security
+
+HTTPS
+
+Validation
+
+Captcha
+
+Spam protection
+
+Final Goal
+
+The website should NOT look like a small business website.
+
+It should look like a premium children's creative brand that investors would believe has raised millions in funding.
+
+Every section should have beautiful animations, premium spacing, world-class UI/UX, and mobile-first responsiveness.
+
+Generate complete production-ready code with clean architecture, reusable React components, and detailed comments.
+
+One improvement I would make
+
+Instead of only selling one ₹599 (10-kit) pack, structure the website like a real e-commerce brand:
+
+Starter Pack – 5 Kits – ₹349
+Best Seller – 10 Kits – ₹599
+Birthday Party Pack – 20 Kits – ₹999
+School Activity Pack – 50 Kits – "Request a Quote"
+
+Highlight the 10-kit pack with a "⭐ Best Seller" badge. This pricing strategy often increases conversions because customers naturally compare options rather than evaluating a single price.

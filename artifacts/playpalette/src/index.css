@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700&family=Baloo+2:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-border: hsl(var(--popover-border));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-border: var(--primary-border);
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-border: var(--secondary-border);
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted-border: var(--muted-border);
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-border: var(--accent-border);
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive-border: var(--destructive-border);
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --font-sans: var(--app-font-sans);
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+  --font-accent: 'Baloo 2', cursive;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 13%;
+  --card: 38 100% 98%;
+  --card-foreground: 0 0% 13%;
+  --card-border: 38 40% 90%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 13%;
+  --popover-border: 38 40% 90%;
+  --primary: 0 96% 72%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 45 100% 62%;
+  --secondary-foreground: 0 0% 13%;
+  --muted: 38 100% 97%;
+  --muted-foreground: 0 0% 45%;
+  --accent: 130 55% 60%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 38 40% 90%;
+  --input: 38 40% 90%;
+  --ring: 0 96% 72%;
+  
+  --chart-1: 0 96% 72%;
+  --chart-2: 45 100% 62%;
+  --chart-3: 130 55% 60%;
+  --chart-4: 218 100% 64%;
+  --chart-5: 274 65% 62%;
+
+  --app-font-sans: 'Nunito', sans-serif;
+  --radius: 1rem;
+  
+  --shadow-2xs: 0px 1px 2px 0px hsl(0 96% 72% / 0.05);
+  --shadow-xs: 0px 2px 4px 0px hsl(0 96% 72% / 0.05);
+  --shadow-sm: 0px 4px 8px -1px hsl(0 96% 72% / 0.1);
+  --shadow: 0px 4px 12px -2px hsl(0 96% 72% / 0.1);
+  --shadow-md: 0px 8px 16px -2px hsl(0 96% 72% / 0.12);
+  --shadow-lg: 0px 12px 24px -4px hsl(0 96% 72% / 0.15);
+  --shadow-xl: 0px 20px 32px -4px hsl(0 96% 72% / 0.15);
+  --shadow-2xl: 0px 24px 48px -8px hsl(0 96% 72% / 0.2);
+}
+
+.dark {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 13%;
+  --card: 38 100% 98%;
+  --card-foreground: 0 0% 13%;
+  --card-border: 38 40% 90%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 13%;
+  --popover-border: 38 40% 90%;
+  --primary: 0 96% 72%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 45 100% 62%;
+  --secondary-foreground: 0 0% 13%;
+  --muted: 38 100% 97%;
+  --muted-foreground: 0 0% 45%;
+  --accent: 130 55% 60%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 38 40% 90%;
+  --input: 38 40% 90%;
+  --ring: 0 96% 72%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-body antialiased bg-background text-foreground overflow-x-hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-btn {
+  background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+  transition: all 0.3s ease;
+}
+
+.gradient-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(255, 107, 107, 0.4);
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}

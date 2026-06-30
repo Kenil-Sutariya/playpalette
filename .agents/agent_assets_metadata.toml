@@ -1,0 +1,14 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "-lvhgfNrhFfsX8a76Twqd"
+uri = "file://artifacts/playpalette/public/hero-image.png"
+type = "image"
+title = "cute child painting a figurine"
+
+[[generated]]
+id = "NWxdcFMYLbk6X7hDifG3G"
+uri = "file://artifacts/playpalette/public/dinosaur-kit.png"
+type = "image"
+title = "painted dinosaur figurine product photo"
