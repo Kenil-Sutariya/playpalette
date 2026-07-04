@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "playpalette",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@workspace/playpalette", "dev"],
+      "port": 5174,
+      "env": {
+        "PORT": "5174",
+        "BASE_PATH": "/"
+      }
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { PartyPopper } from "lucide-react";
+import { PartyPopper, GraduationCap, Cake } from "lucide-react";
 
 export default function BulkOrders() {
   return (
@@ -22,27 +22,61 @@ export default function BulkOrders() {
               Bulk Orders Available
             </span>
             <h2 className="text-4xl md:text-6xl font-extrabold font-heading mb-6 leading-tight">
-              Perfect for Birthday Parties, Schools & Events!
+              Bulk Orders for Parties & Schools
             </h2>
             <p className="text-xl md:text-2xl font-medium mb-12 text-white/90">
               Give a gift that sparks creativity. Special pricing for bulk orders of 10+ kits.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 text-left">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-                <h3 className="font-bold text-xl mb-2">Individual</h3>
-                <p className="text-3xl font-extrabold mb-2">₹599</p>
-                <p className="text-sm text-white/80">10 Kits Box</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 text-left">
+              <div className="bg-white rounded-[2rem] p-8 text-foreground shadow-xl flex flex-col">
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5">
+                  <Cake className="w-7 h-7 text-primary" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-wider text-primary mb-2">
+                  For Birthday Parties
+                </span>
+                <h3 className="font-bold font-heading text-2xl mb-3">
+                  The Party Favor Kids Actually Love
+                </h3>
+                <p className="text-muted-foreground mb-6 flex-1">
+                  Skip the goodie-bag scramble — paint kits double as the party
+                  activity and the take-home gift. Kids stay happily busy, and
+                  ordering is as easy as one WhatsApp message.
+                </p>
+                <a
+                  href="https://wa.me/919723094760?text=Hello%2C%20I%20would%20like%20to%20get%20a%20quote%20for%20a%20birthday%20party%20bulk%20order."
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block text-center bg-primary text-white px-8 py-4 rounded-full font-extrabold text-lg shadow-lg hover:scale-105 transition-transform"
+                >
+                  Get Party Quote
+                </a>
               </div>
-              <div className="bg-white rounded-2xl p-6 border border-white text-foreground transform md:-translate-y-4 shadow-xl">
-                <h3 className="font-bold text-xl mb-2 text-primary">Birthday Pack</h3>
-                <p className="text-3xl font-extrabold mb-2">₹999</p>
-                <p className="text-sm text-muted-foreground">20 Kits Pack (Save 20%)</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-                <h3 className="font-bold text-xl mb-2">School Pack</h3>
-                <p className="text-3xl font-extrabold mb-2">Quote</p>
-                <p className="text-sm text-white/80">50+ Kits (Best Value)</p>
+
+              <div className="bg-white rounded-[2rem] p-8 text-foreground shadow-xl flex flex-col">
+                <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-5">
+                  <GraduationCap className="w-7 h-7 text-accent" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-wider text-accent mb-2">
+                  For Schools & Events
+                </span>
+                <h3 className="font-bold font-heading text-2xl mb-3">
+                  Creative Fun for the Whole Classroom
+                </h3>
+                <p className="text-muted-foreground mb-6 flex-1">
+                  Classroom-ready quantities with 100% safe, non-toxic
+                  materials. Special bulk pricing for educators — perfect for
+                  art periods, activity days, and school events.
+                </p>
+                <a
+                  href="https://wa.me/919723094760?text=Hello%2C%20I%20would%20like%20to%20get%20a%20quote%20for%20a%20school%20or%20event%20bulk%20order."
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block text-center bg-accent text-white px-8 py-4 rounded-full font-extrabold text-lg shadow-lg hover:scale-105 transition-transform"
+                >
+                  Get School Quote
+                </a>
               </div>
             </div>
 

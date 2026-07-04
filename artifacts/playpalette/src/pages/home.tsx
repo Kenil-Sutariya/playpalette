@@ -5,7 +5,7 @@ import Features from "@/components/sections/Features";
 import InsideKit from "@/components/sections/InsideKit";
 import HowItWorks from "@/components/sections/HowItWorks";
 import FeaturedProducts from "@/components/sections/FeaturedProducts";
-import Gallery from "@/components/sections/Gallery";
+// import Gallery from "@/components/sections/Gallery";
 import Testimonials from "@/components/sections/Testimonials";
 import BulkOrders from "@/components/sections/BulkOrders";
 import About from "@/components/sections/About";
@@ -20,12 +20,12 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Pricing />
         <Features />
         <InsideKit />
         <HowItWorks />
+        <Pricing />
         <FeaturedProducts />
-        <Gallery />
+        {/* <Gallery /> */}
         <Testimonials />
         <BulkOrders />
         <About />

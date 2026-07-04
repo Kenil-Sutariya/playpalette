@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 import { Play } from "lucide-react";
 
 export default function Hero() {
@@ -36,14 +37,12 @@ export default function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row items-center gap-5 justify-center lg:justify-start">
-              <a
-                href="https://wa.me/919723094760?text=Hello%2C%20I%20would%20like%20to%20order%20PlayPalette%20Paint%20Kits."
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                href="/shop"
                 className="gradient-btn text-white px-8 py-4 rounded-full font-heading font-bold text-lg shadow-lg flex items-center gap-2 w-full sm:w-auto justify-center"
               >
                 Shop Now 🛒
-              </a>
+              </Link>
               <button className="px-8 py-4 rounded-full font-heading font-bold text-lg text-foreground border-2 border-border hover:border-primary hover:text-primary transition-colors flex items-center gap-2 w-full sm:w-auto justify-center">
                 Watch Demo <Play className="w-5 h-5 fill-current" />
               </button>
