@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { ShieldCheck, Loader2, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Loader2, CheckCircle2, TicketPercent } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import Navbar from "@/components/sections/Navbar";
 import Footer from "@/components/sections/Footer";
@@ -32,6 +32,21 @@ interface FormState {
 
 const emptyForm: FormState = { name: "", phone: "", email: "", address: "", city: "", pincode: "" };
 
+interface ReferralResult {
+  valid: boolean;
+  discountType?: string;
+  discountValue?: number;
+  discount?: number;
+  finalAmount?: number;
+  message?: string;
+}
+
+type ReferralState =
+  | { status: "checking" }
+  | { status: "valid"; discount: number; finalAmount: number }
+  | { status: "invalid"; message: string }
+  | null;
+
 function loadRazorpayScript(): Promise<boolean> {
   return new Promise((resolve) => {
     if (window.Razorpay) return resolve(true);
@@ -59,11 +74,33 @@ async function sendOrderToSheet(fields: Record<string, string>) {
   }
 }
 
+// The referral code is validated by Apps Script (the only source of truth —
+// codes are never checked or stored in this frontend). GET responses from
+// Apps Script are CORS-readable, unlike the POST above.
+// commit=true increments the code's UsageCount; use it only when the order
+// is actually placed.
+async function validateReferral(code: string, total: number, commit: boolean): Promise<ReferralResult> {
+  if (!GOOGLE_SHEET_WEBAPP_URL) {
+    return { valid: false, message: "Code verification isn't available right now." };
+  }
+  try {
+    const url =
+      `${GOOGLE_SHEET_WEBAPP_URL}?action=validate` +
+      `&code=${encodeURIComponent(code)}&total=${total}&commit=${commit ? 1 : 0}`;
+    const res = await fetch(url);
+    return (await res.json()) as ReferralResult;
+  } catch {
+    return { valid: false, message: "Couldn't verify the code right now." };
+  }
+}
+
 export default function Checkout() {
   const { cart, cartTotal, clearCart } = useStore();
   const [form, setForm] = useState<FormState>(emptyForm);
   const [submitting, setSubmitting] = useState(false);
-  const [placedOrderId, setPlacedOrderId] = useState<string | null>(null);
+  const [placedOrder, setPlacedOrder] = useState<{ id: string; saved: number } | null>(null);
+  const [referralCode, setReferralCode] = useState("");
+  const [referral, setReferral] = useState<ReferralState>(null);
   const [, navigate] = useLocation();
 
   const items = cart
@@ -77,9 +114,27 @@ export default function Checkout() {
   const update = (key: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((prev) => ({ ...prev, [key]: e.target.value }));
 
-  const finishOrder = (orderId: string) => {
+  const displayTotal = referral?.status === "valid" ? referral.finalAmount : cartTotal;
+
+  const applyReferral = async () => {
+    const code = referralCode.trim().toUpperCase();
+    if (!code || referral?.status === "checking") return;
+    setReferral({ status: "checking" });
+    const result = await validateReferral(code, cartTotal, false);
+    if (result.valid && typeof result.finalAmount === "number") {
+      setReferral({
+        status: "valid",
+        discount: result.discount ?? cartTotal - result.finalAmount,
+        finalAmount: result.finalAmount,
+      });
+    } else {
+      setReferral({ status: "invalid", message: result.message || "Invalid referral code." });
+    }
+  };
+
+  const finishOrder = (orderId: string, saved: number) => {
     clearCart();
-    setPlacedOrderId(orderId);
+    setPlacedOrder({ id: orderId, saved });
     window.scrollTo(0, 0);
   };
 
@@ -87,6 +142,23 @@ export default function Checkout() {
     e.preventDefault();
     if (submitting || items.length === 0) return;
     setSubmitting(true);
+
+    // Re-validate the code at order time (authoritative, increments usage).
+    // An invalid or unverifiable code never blocks the order — the customer
+    // simply pays the full price.
+    const code = referralCode.trim().toUpperCase();
+    let discount = 0;
+    let finalTotal = cartTotal;
+    if (code) {
+      const result = await validateReferral(code, cartTotal, true);
+      if (result.valid && typeof result.finalAmount === "number") {
+        discount = result.discount ?? cartTotal - result.finalAmount;
+        finalTotal = result.finalAmount;
+        setReferral({ status: "valid", discount, finalAmount: finalTotal });
+      } else {
+        setReferral({ status: "invalid", message: result.message || "Invalid referral code." });
+      }
+    }
 
     const orderId = `PP-${Date.now().toString(36).toUpperCase()}`;
     const baseFields = {
@@ -99,13 +171,16 @@ export default function Checkout() {
       pincode: form.pincode,
       items: itemsSummary,
       total: String(cartTotal),
+      referralCode: discount > 0 ? code : code ? `${code} (invalid)` : "",
+      discount: String(discount),
+      finalAmount: String(finalTotal),
     };
 
     if (RAZORPAY_KEY_ID && (await loadRazorpayScript()) && window.Razorpay) {
       await sendOrderToSheet({ ...baseFields, payment: "Pending — Razorpay opened" });
       const rzp = new window.Razorpay({
         key: RAZORPAY_KEY_ID,
-        amount: cartTotal * 100, // paise
+        amount: finalTotal * 100, // paise
         currency: "INR",
         name: STORE_NAME,
         description: itemsSummary,
@@ -117,7 +192,7 @@ export default function Checkout() {
             ...baseFields,
             payment: `PAID — ${response.razorpay_payment_id}`,
           });
-          finishOrder(orderId);
+          finishOrder(orderId, discount);
         },
         modal: { ondismiss: () => setSubmitting(false) },
       });
@@ -127,18 +202,23 @@ export default function Checkout() {
 
     // No Razorpay key configured yet — record the order and hand off to WhatsApp.
     await sendOrderToSheet({ ...baseFields, payment: "To collect (WhatsApp)" });
+    const referralLines =
+      discount > 0
+        ? `*Referral Code:* ${code}%0A*Discount:* ₹${discount}%0A*Final Amount:* ₹${finalTotal}%0A`
+        : "";
     const message =
       `Hello! I just placed order ${orderId} on PlayPalette 🎨%0A%0A` +
       `*Items:* ${encodeURIComponent(itemsSummary)}%0A` +
-      `*Total:* ₹${cartTotal}%0A%0A` +
-      `*Name:* ${encodeURIComponent(form.name)}%0A` +
+      `*Total:* ₹${cartTotal}%0A` +
+      referralLines +
+      `%0A*Name:* ${encodeURIComponent(form.name)}%0A` +
       `*Phone:* ${encodeURIComponent(form.phone)}%0A` +
       `*Address:* ${encodeURIComponent(`${form.address}, ${form.city} - ${form.pincode}`)}`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
-    finishOrder(orderId);
+    finishOrder(orderId, discount);
   };
 
-  if (placedOrderId) {
+  if (placedOrder) {
     return (
       <div className="relative w-full bg-white min-h-screen flex flex-col">
         <Navbar />
@@ -150,8 +230,13 @@ export default function Checkout() {
                 Order placed! 🎉
               </h1>
               <p className="text-xl text-muted-foreground font-body mb-2">
-                Your order ID is <span className="font-bold text-foreground">{placedOrderId}</span>.
+                Your order ID is <span className="font-bold text-foreground">{placedOrder.id}</span>.
               </p>
+              {placedOrder.saved > 0 && (
+                <p className="text-lg font-bold text-accent mb-2">
+                  Your referral code saved you ₹{placedOrder.saved} 🎊
+                </p>
+              )}
               <p className="text-muted-foreground font-body mb-10">
                 We'll confirm your order and delivery details shortly.
                 Questions? Ping us on WhatsApp any time.
@@ -271,10 +356,69 @@ export default function Checkout() {
                     </div>
                   ))}
                 </div>
-                <div className="border-t border-border pt-4 flex justify-between text-lg mb-6">
-                  <span className="font-bold">Total</span>
-                  <span className="font-extrabold text-primary">₹{cartTotal}</span>
+
+                <div className="border-t border-border pt-4 mb-4">
+                  <label className="block mb-1">
+                    <span className="font-bold text-sm text-foreground flex items-center gap-1.5">
+                      <TicketPercent className="w-4 h-4 text-primary" /> Referral / Coupon Code (Optional)
+                    </span>
+                    <div className="mt-2 flex gap-2">
+                      <input
+                        value={referralCode}
+                        onChange={(e) => {
+                          setReferralCode(e.target.value.toUpperCase());
+                          setReferral(null);
+                        }}
+                        placeholder="e.g. PLAY10"
+                        className="min-w-0 flex-1 rounded-2xl border-2 border-border bg-white px-4 py-2.5 font-body uppercase tracking-wide focus:border-primary focus:outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={applyReferral}
+                        disabled={!referralCode.trim() || referral?.status === "checking"}
+                        className="px-5 py-2.5 rounded-2xl bg-foreground text-white font-bold text-sm hover:bg-primary transition-colors disabled:opacity-50"
+                      >
+                        {referral?.status === "checking" ? "…" : "Apply"}
+                      </button>
+                    </div>
+                  </label>
+                  {referral?.status === "valid" && (
+                    <p className="text-sm font-bold text-accent mt-2">✓ Referral code applied</p>
+                  )}
+                  {referral?.status === "invalid" && (
+                    <p className="text-sm font-bold text-red-500 mt-2">
+                      {referral.message}
+                      <span className="block font-medium text-muted-foreground">
+                        You can still place your order at the regular price.
+                      </span>
+                    </p>
+                  )}
                 </div>
+
+                <div className="border-t border-border pt-4 mb-6 space-y-2">
+                  {referral?.status === "valid" ? (
+                    <>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Original Price</span>
+                        <span className="font-bold line-through text-muted-foreground">₹{cartTotal}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Discount</span>
+                        <span className="font-bold text-accent">− ₹{referral.discount}</span>
+                      </div>
+                      <div className="flex justify-between text-lg">
+                        <span className="font-bold">Final Price</span>
+                        <span className="font-extrabold text-primary">₹{referral.finalAmount}</span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex justify-between text-lg">
+                      <span className="font-bold">Total</span>
+                      <span className="font-extrabold text-primary">₹{displayTotal}</span>
+                    </div>
+                  )}
+                </div>
+
                 <button
                   type="submit"
                   disabled={submitting}
