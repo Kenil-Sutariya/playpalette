@@ -69,7 +69,7 @@ function ReviewCard({ review }: { review: Review }) {
         </div>
         {review.verified && (
           <span
-            className="w-8 h-8 shrink-0 rounded-full bg-green-100 text-green-600 flex items-center justify-center"
+            className="relative w-8 h-8 shrink-0 rounded-full bg-green-100 text-green-600 flex items-center justify-center"
             title="Verified purchase"
           >
             <Check className="w-4 h-4" aria-hidden />
