@@ -98,7 +98,7 @@ export default function Checkout() {
   const { cart, cartTotal, clearCart } = useStore();
   const [form, setForm] = useState<FormState>(emptyForm);
   const [submitting, setSubmitting] = useState(false);
-  const [placedOrder, setPlacedOrder] = useState<{ id: string; saved: number } | null>(null);
+  const [placedOrder, setPlacedOrder] = useState<{ id: string; saved: number; waUrl?: string } | null>(null);
   const [referralCode, setReferralCode] = useState("");
   const [referral, setReferral] = useState<ReferralState>(null);
   const [, navigate] = useLocation();
@@ -132,9 +132,9 @@ export default function Checkout() {
     }
   };
 
-  const finishOrder = (orderId: string, saved: number) => {
+  const finishOrder = (orderId: string, saved: number, waUrl?: string) => {
     clearCart();
-    setPlacedOrder({ id: orderId, saved });
+    setPlacedOrder({ id: orderId, saved, waUrl });
     window.scrollTo(0, 0);
   };
 
@@ -201,7 +201,9 @@ export default function Checkout() {
     }
 
     // No Razorpay key configured yet — record the order and hand off to WhatsApp.
-    await sendOrderToSheet({ ...baseFields, payment: "To collect (WhatsApp)" });
+    // Fire-and-forget: awaiting the sheet request would use up the tap gesture
+    // browsers require for window.open (its response is opaque anyway).
+    void sendOrderToSheet({ ...baseFields, payment: "To collect (WhatsApp)" });
     const referralLines =
       discount > 0
         ? `*Referral Code:* ${code}%0A*Discount:* ₹${discount}%0A*Final Amount:* ₹${finalTotal}%0A`
@@ -214,8 +216,16 @@ export default function Checkout() {
       `%0A*Name:* ${encodeURIComponent(form.name)}%0A` +
       `*Phone:* ${encodeURIComponent(form.phone)}%0A` +
       `*Address:* ${encodeURIComponent(`${form.address}, ${form.city} - ${form.pincode}`)}`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
-    finishOrder(orderId, discount);
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+    const waWindow = window.open(waUrl, "_blank");
+    finishOrder(orderId, discount, waUrl);
+    if (!waWindow) {
+      // Popup blocked (common on phones and in-app browsers) — take this tab
+      // to WhatsApp instead; the back button returns to the success page.
+      setTimeout(() => {
+        window.location.href = waUrl;
+      }, 1200);
+    }
   };
 
   if (placedOrder) {
@@ -238,21 +248,23 @@ export default function Checkout() {
                 </p>
               )}
               <p className="text-muted-foreground font-body mb-10">
-                We'll confirm your order and delivery details shortly.
-                Questions? Ping us on WhatsApp any time.
+                {placedOrder.waUrl
+                  ? "WhatsApp should open with your order details — if it didn't, tap the green button below to send them to us."
+                  : "We'll confirm your order and delivery details shortly. Questions? Ping us on WhatsApp any time."}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/shop" className="gradient-btn text-white px-8 py-4 rounded-full font-heading font-bold text-lg shadow-lg">
-                  Keep Shopping
-                </Link>
                 <a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                  href={placedOrder.waUrl ?? `https://wa.me/${WHATSAPP_NUMBER}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-8 py-4 rounded-full font-heading font-bold text-lg text-green-600 border-2 border-green-500 hover:bg-green-50 transition-colors inline-flex items-center justify-center gap-2"
+                  className="bg-green-500 text-white px-8 py-4 rounded-full font-heading font-bold text-lg shadow-lg hover:bg-green-600 transition-colors inline-flex items-center justify-center gap-2"
                 >
-                  <FaWhatsapp className="w-5 h-5" /> Chat with us
+                  <FaWhatsapp className="w-5 h-5" />
+                  {placedOrder.waUrl ? "Send Order on WhatsApp" : "Chat with us"}
                 </a>
+                <Link href="/shop" className="px-8 py-4 rounded-full font-heading font-bold text-lg text-foreground border-2 border-border hover:border-primary hover:text-primary transition-colors text-center">
+                  Keep Shopping
+                </Link>
               </div>
             </motion.div>
           </div>
