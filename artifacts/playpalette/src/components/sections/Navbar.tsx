@@ -6,7 +6,6 @@ import {
   Heart,
   Menu,
   X,
-  Search,
   Home,
   Puzzle,
   Gift,
@@ -15,9 +14,7 @@ import {
   HelpCircle,
   Mail,
 } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
 import { useStore } from "@/lib/store";
-import { WHATSAPP_NUMBER } from "@/lib/config";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -55,7 +52,7 @@ export default function Navbar() {
     { name: "Birthday Gifts", href: hashHref("#bulk") },
     { name: "Schools", href: hashHref("#bulk") },
     { name: "About", href: hashHref("#about") },
-    { name: "FAQ", href: hashHref("#faq") },
+    { name: "FAQ", href: "/faq", route: true },
     { name: "Contact", href: hashHref("#contact") },
   ];
 
@@ -68,11 +65,9 @@ export default function Navbar() {
     { name: "Birthday Gifts", icon: Gift, href: hashHref("#bulk") },
     { name: "Schools", icon: GraduationCap, href: hashHref("#bulk") },
     { name: "About", icon: Users, href: hashHref("#about") },
-    { name: "FAQ", icon: HelpCircle, href: hashHref("#faq") },
+    { name: "FAQ", icon: HelpCircle, href: "/faq", route: true },
     { name: "Contact", icon: Mail, href: hashHref("#contact") },
   ];
-
-  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello%2C%20I%20would%20like%20to%20order%20PlayPalette%20Paint%20Kits.`;
 
   const menuItemClass =
     "flex items-center gap-2 rounded-full bg-card/70 border border-card-border px-3 py-3.5 font-body font-semibold text-sm text-foreground transition-colors hover:bg-card active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
@@ -94,12 +89,6 @@ export default function Navbar() {
           </Link>
 
           <div className="flex items-center gap-1">
-            <button
-              aria-label="Search"
-              className="w-10 h-10 flex items-center justify-center text-foreground hover:text-primary transition-colors rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            >
-              <Search className="w-[22px] h-[22px]" aria-hidden />
-            </button>
             <Link
               href="/cart"
               aria-label={`Cart, ${cartCount} items`}
@@ -167,7 +156,7 @@ export default function Navbar() {
                   )}
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-border flex items-center justify-between px-1">
+                <div className="mt-4 pt-3 border-t border-border flex items-center justify-center px-1">
                   <Link
                     href="/wishlist"
                     onClick={() => setMobileMenuOpen(false)}
@@ -181,15 +170,6 @@ export default function Navbar() {
                       </span>
                     )}
                   </Link>
-                  <a
-                    href={whatsappHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 text-sm font-bold text-green-600 hover:text-green-700 transition-colors rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
-                  >
-                    <FaWhatsapp className="w-4 h-4" aria-hidden />
-                    Order on WhatsApp
-                  </a>
                 </div>
               </div>
             </motion.nav>
@@ -256,14 +236,6 @@ export default function Navbar() {
                 {cartCount}
               </span>
             </Link>
-            <a
-              href={whatsappHref}
-              target="_blank"
-              rel="noreferrer"
-              className="text-green-500 hover:text-green-600 transition-colors"
-            >
-              <FaWhatsapp className="w-7 h-7" />
-            </a>
             <Link
               href="/shop"
               className="gradient-btn text-white px-6 py-2.5 rounded-full font-heading font-semibold text-sm shadow-md"

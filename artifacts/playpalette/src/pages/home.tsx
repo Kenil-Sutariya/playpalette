@@ -6,10 +6,10 @@ import InsideKit from "@/components/sections/InsideKit";
 import HowItWorks from "@/components/sections/HowItWorks";
 import FeaturedProducts from "@/components/sections/FeaturedProducts";
 // import Gallery from "@/components/sections/Gallery";
+import ProductShowcase from "@/components/sections/ProductShowcase";
 import Testimonials from "@/components/sections/Testimonials";
 import BulkOrders from "@/components/sections/BulkOrders";
 import About from "@/components/sections/About";
-import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
 import FloatingButtons from "@/components/sections/FloatingButtons";
@@ -25,11 +25,11 @@ export default function Home() {
         <HowItWorks />
         <Pricing />
         <FeaturedProducts />
+        <ProductShowcase />
         {/* <Gallery /> */}
         <Testimonials />
         <BulkOrders />
         <About />
-        <FAQ />
         <Contact />
       </main>
       <Footer />

@@ -10,6 +10,7 @@ import Shop from "@/pages/shop";
 import Cart from "@/pages/cart";
 import Wishlist from "@/pages/wishlist";
 import Checkout from "@/pages/checkout";
+import FAQPage from "@/pages/faq";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/cart" component={Cart} />
       <Route path="/wishlist" component={Wishlist} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/faq" component={FAQPage} />
       <Route component={NotFound} />
     </Switch>
   );

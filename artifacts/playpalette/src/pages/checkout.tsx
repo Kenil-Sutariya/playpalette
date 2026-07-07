@@ -247,10 +247,15 @@ export default function Checkout() {
                   Your referral code saved you ₹{placedOrder.saved} 🎊
                 </p>
               )}
-              <p className="text-muted-foreground font-body mb-10">
+              <p className="text-muted-foreground font-body mb-6">
                 {placedOrder.waUrl
                   ? "WhatsApp should open with your order details — if it didn't, tap the green button below to send them to us."
                   : "We'll confirm your order and delivery details shortly. Questions? Ping us on WhatsApp any time."}
+              </p>
+              <p className="inline-block bg-card/70 border border-card-border rounded-2xl px-5 py-3 text-sm text-muted-foreground font-body mb-10">
+                📦 <span className="font-bold text-foreground">Quick tip:</span> please record a
+                clear unboxing video when your parcel arrives — it's required for any
+                return or replacement claim (within 2 days of delivery).
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a

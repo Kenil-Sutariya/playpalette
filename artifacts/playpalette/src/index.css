@@ -137,6 +137,15 @@
   }
 }
 
+/* Hard guarantee against sideways page panning on phones. Applied to html
+   AND body (iOS Safari ignores body alone). `clip`, unlike `hidden`, does
+   not create a scroll container, so position: sticky keeps working; the
+   `hidden` line is the fallback for older browsers. */
+html, body {
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
 .glassmorphism {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);

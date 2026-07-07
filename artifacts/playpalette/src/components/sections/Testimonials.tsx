@@ -95,12 +95,15 @@ export default function Testimonials() {
     ? { initial: { opacity: 0 }, whileInView: { opacity: 1 } }
     : { initial: { opacity: 0, y: 24 }, whileInView: { opacity: 1, y: 0 } };
 
+  // Fractional slide pitch (offsetLeft rounds to integers, and the error
+  // accumulated across slides breaks the loop-reset threshold).
   const slideStep = () => {
     const track = trackRef.current;
-    if (!track || track.children.length === 0) return 0;
-    return track.children.length > 1
-      ? (track.children[1] as HTMLElement).offsetLeft - (track.children[0] as HTMLElement).offsetLeft
-      : (track.children[0] as HTMLElement).clientWidth;
+    if (!track || track.children.length < 2) return 0;
+    return (
+      track.children[1].getBoundingClientRect().left -
+      track.children[0].getBoundingClientRect().left
+    );
   };
 
   const scrollToIndex = (index: number, smooth = true) => {
@@ -119,16 +122,17 @@ export default function Testimonials() {
   };
 
   // Auto-advance the mobile carousel; paused while the user interacts and
-  // disabled entirely for prefers-reduced-motion.
+  // disabled entirely for prefers-reduced-motion. Advancing past the last
+  // review lands on a clone of the first; the scroll handler then resets
+  // instantly (invisible, identical content) so the loop never jumps back.
   useEffect(() => {
     if (reduced) return;
     const id = setInterval(() => {
       const track = trackRef.current;
       if (!track || track.offsetParent === null) return; // carousel not shown (desktop)
       if (Date.now() < pausedUntil.current) return;
-      const count = track.children.length;
-      if (count < 2) return;
-      scrollToIndex((currentRef.current + 1) % count);
+      if (track.children.length < 2) return;
+      scrollToIndex(currentRef.current + 1);
     }, AUTO_ADVANCE_MS);
     return () => clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,7 +142,14 @@ export default function Testimonials() {
     const track = trackRef.current;
     const step = slideStep();
     if (!track || step === 0) return;
-    const index = Math.round(track.scrollLeft / step);
+    // Fully on the clone of the first review — reset invisibly to the start.
+    if (track.scrollLeft >= step * visibleReviews.length - 3) {
+      track.scrollTo({ left: 0, behavior: "auto" });
+      currentRef.current = 0;
+      setCurrent(0);
+      return;
+    }
+    const index = Math.round(track.scrollLeft / step) % visibleReviews.length;
     if (index !== currentRef.current) {
       currentRef.current = index;
       setCurrent(index);
@@ -287,17 +298,24 @@ export default function Testimonials() {
             onPointerCancel={endDrag}
             onTouchStart={pauseAutoScroll}
             onWheel={pauseAutoScroll}
-            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4 cursor-grab active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded-3xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-pl-4 pb-2 -mx-4 px-4 cursor-grab active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded-3xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {visibleReviews.map((review, index) => (
               <div
                 key={review.name + review.city}
-                className="w-[85%] shrink-0 snap-center select-none"
+                className="w-[85%] shrink-0 snap-start select-none"
                 aria-label={`Review ${index + 1} of ${visibleReviews.length}`}
               >
                 <ReviewCard review={review} />
               </div>
             ))}
+            {/* clone of the first review enables the seamless infinite loop;
+                the spacer gives the clone's snap position room to align
+                exactly with where the first review sits at scroll 0 */}
+            <div aria-hidden className="w-[85%] shrink-0 snap-start select-none">
+              <ReviewCard review={visibleReviews[0]} />
+            </div>
+            <div aria-hidden className="shrink-0 w-[20%]" />
           </div>
 
           {/* Pagination dots */}
