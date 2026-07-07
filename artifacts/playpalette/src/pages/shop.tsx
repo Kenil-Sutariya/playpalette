@@ -4,7 +4,6 @@ import { Heart, ShoppingCart, Truck, ShieldCheck, Sparkles } from "lucide-react"
 import Navbar from "@/components/sections/Navbar";
 import Footer from "@/components/sections/Footer";
 import FloatingButtons from "@/components/sections/FloatingButtons";
-import PaintingLion from "@/components/PaintingLion";
 import { products } from "@/lib/products";
 import { useStore } from "@/lib/store";
 import { useToast } from "@/hooks/use-toast";
@@ -31,42 +30,28 @@ export default function Shop() {
           <div className="absolute bottom-0 right-10 w-80 h-80 bg-secondary/30 rounded-full blur-3xl -z-10 mix-blend-multiply" />
 
           <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-                className="flex-1 text-center lg:text-left"
-              >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-bold text-sm mb-6 border border-primary/20">
-                  <Sparkles className="w-4 h-4" /> The PlayPalette Shop
-                </div>
-                <h1 className="text-4xl md:text-6xl font-extrabold font-heading leading-[1.1] mb-6 tracking-tight text-foreground">
-                  Pick a Kit, <span className="gradient-text">Paint a World</span>
-                </h1>
-                <p className="text-lg md:text-xl font-body text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0">
-                  Every box has 10 POP figurines, paints and brushes — everything
-                  little hands need for hours of screen-free fun.
-                </p>
-                <div className="flex flex-wrap justify-center lg:justify-start gap-4 md:gap-6 text-sm font-semibold text-muted-foreground">
-                  <span className="flex items-center gap-2"><Truck className="w-5 h-5 text-accent" /> Fast Delivery</span>
-                  <span className="flex items-center gap-2"><ShieldCheck className="w-5 h-5 text-accent" /> 100% Non-Toxic</span>
-                  <span className="flex items-center gap-2"><Sparkles className="w-5 h-5 text-secondary" /> Brushes Included</span>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="flex-1 w-full max-w-md"
-              >
-                <PaintingLion />
-                <p className="text-center text-sm font-semibold text-muted-foreground mt-2">
-                  Watch the magic — that's what your kid gets to do!
-                </p>
-              </motion.div>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="max-w-2xl mx-auto text-center"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-bold text-sm mb-6 border border-primary/20">
+                <Sparkles className="w-4 h-4" /> The PlayPalette Shop
+              </div>
+              <h1 className="text-4xl md:text-6xl font-extrabold font-heading leading-[1.1] mb-6 tracking-tight text-foreground">
+                Pick a Kit, <span className="gradient-text">Paint a World</span>
+              </h1>
+              <p className="text-lg md:text-xl font-body text-muted-foreground mb-8 max-w-xl mx-auto">
+                Every box has 10 POP figurines, paints and brushes — everything
+                little hands need for hours of screen-free fun.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm font-semibold text-muted-foreground">
+                <span className="flex items-center gap-2"><Truck className="w-5 h-5 text-accent" /> Fast Delivery</span>
+                <span className="flex items-center gap-2"><ShieldCheck className="w-5 h-5 text-accent" /> 100% Non-Toxic</span>
+                <span className="flex items-center gap-2"><Sparkles className="w-5 h-5 text-secondary" /> Brushes Included</span>
+              </div>
+            </motion.div>
           </div>
         </section>
 
